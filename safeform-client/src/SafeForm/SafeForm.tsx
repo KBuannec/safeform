@@ -1,3 +1,5 @@
+import './SafeForm.scss';
+
 type Props = {
     form: { name: string; email: string };
     errors: { name?: string; email?: string };
@@ -6,21 +8,35 @@ type Props = {
     onSubmit: (e: React.FormEvent) => void;
 };
 
-const SafeForm = ({ form, errors, success, onChange, onSubmit }: Props) => (
-    <form onSubmit={onSubmit}>
-        <div>
-            <label>Nom :</label>
-            <input name="name" value={form.name} onChange={onChange} />
-            {errors.name && <p style={{ color: 'red' }}>{errors.name}</p>}
-        </div>
-        <div>
-            <label>Email :</label>
-            <input name="email" value={form.email} onChange={onChange} />
-            {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
-        </div>
-        <button type="submit">Envoyer</button>
-        {success && <p>{success}</p>}
-    </form>
-);
+const SafeForm = ({ form, errors, success, onChange, onSubmit }: Props) => {
+    return (
+        <form onSubmit={onSubmit} className="safeform">
+            <h2>🛡️ SafeForm</h2>
+
+            <label>Nom</label>
+            <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={onChange}
+            />
+            {errors.name && <p className="error">{errors.name}</p>}
+
+            <label>Email</label>
+            <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={onChange}
+            />
+            {errors.email && <p className="error">{errors.email}</p>}
+
+            <button type="submit">Envoyer</button>
+
+            {success && <p className="success">{success}</p>}
+        </form>
+
+    );
+};
 
 export default SafeForm;
