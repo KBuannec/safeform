@@ -19,15 +19,15 @@ export const useSafeForm = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const result = formSchema.safeParse(form);
 
+        const result = formSchema.safeParse(form);
         if (!result.success) {
             const fieldErrors = result.error.flatten().fieldErrors;
             setErrors({
                 name: fieldErrors.name?.[0],
                 email: fieldErrors.email?.[0],
             });
-            return;
+            return; // ✅ on bloque l'envoi si les données sont invalides
         }
 
         setErrors({});
@@ -49,6 +49,7 @@ export const useSafeForm = () => {
             setSuccess("Une erreur est survenue");
         }
     };
+
 
     return {
         form,

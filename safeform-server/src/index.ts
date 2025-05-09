@@ -11,6 +11,8 @@ app.use(helmet());
 app.use(express.json());
 
 app.post('/submit', (req, res) => {
+  console.log('Reçu brut :', req.body)
+  
   const result = formSchema.safeParse(req.body);
 
   if (!result.success) {

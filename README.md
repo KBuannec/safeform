@@ -33,7 +33,7 @@ safeform/
 ### Back-end (Node.js) :
 - Express en TypeScript
 - Middleware **Helmet** pour la sécurité
-- Validation côté serveur (Zod à venir)
+- Validation côté serveur (Zod)
 - Communication via **API REST**
 
 ---
@@ -59,8 +59,6 @@ npm run dev
 ---
 
 ### 📌 À venir :
-
-- Validation Zod côté serveur
 
 - Ajout de tests unitaires
 
