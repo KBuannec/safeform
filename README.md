@@ -56,6 +56,7 @@ cd safeform-client
 npm install
 npm run dev
 ```
+---
 
 ### 📌 À venir :
 
