@@ -7,8 +7,8 @@
 ## 📁 Architecture
 
 safeform/
-├── safeform-client/ # Frontend React + TypeScript + Zod
-└── safeform-server/ # Backend Express + TypeScript + Helmet + Zod
+├── safeform-client/ # Frontend React + TypeScript + Zod + SCSS
+└── safeform-server/ # Backend Express + TypeScript + Helmet + CSRF + Zod
 
 
 ---
@@ -17,7 +17,11 @@ safeform/
 
 - Créer une base de formulaire sécurisée et scalable
 - Implémenter une validation côté front avec **Zod**
-- Intégrer une protection côté serveur (XSS, validation stricte, headers sécurité)
+- Intégrer une sécurité complète côté serveur :
+  - Protection contre le XSS
+  - Protection CSRF
+  - Headers sécurisés
+  - Rate-limiting anti-spam
 - Préparer l’extension vers un projet DevSecOps (tests, CI, audit, etc.)
 
 ---
@@ -26,15 +30,18 @@ safeform/
 
 ### Front-end (React) :
 - React + TypeScript (via Vite)
-- Architecture *feature folder*
-- Formulaire validé par **Zod**
-- Séparation **Composant / Hook / Container**
+- Architecture *feature folder* (Composant / Hook / Container)
+- Validation des champs avec **Zod**
+- SCSS personnalisé
+- Requêtes sécurisées avec `fetch` + header `X-XSRF-TOKEN`
 
 ### Back-end (Node.js) :
 - Express en TypeScript
-- Middleware **Helmet** pour la sécurité
-- Validation côté serveur (Zod)
-- Communication via **API REST**
+- Middleware **Helmet** (headers de sécurité)
+- **Zod** pour valider les données entrantes
+- **CORS** strict (avec `credentials: true`)
+- **csurf** pour protection CSRF (cookie + token)
+- **express-rate-limit** pour limiter les abus
 
 ---
 
@@ -60,10 +67,13 @@ npm run dev
 
 ### 📌 À venir :
 
+- Authentification utilisateur avec base de données
+
 - Ajout de tests unitaires
 
-- Intégration CI/CD + SonarQube
+- Intégration CI/CD
 
-- Protection CSRF et journalisation
+- Audit de sécurité (ESLint + SonarQube)
+
 
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { z } from 'zod';
 
 const formSchema = z.object({
@@ -12,6 +12,23 @@ export const useSafeForm = () => {
     const [form, setForm] = useState<FormData>({ name: '', email: '' });
     const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
     const [success, setSuccess] = useState<string | null>(null);
+    const [csrfToken, setCsrfToken] = useState<string>('');
+
+    useEffect(() => {
+        fetch('http://localhost:3000/csrf-token', {
+            credentials: 'include',
+        })
+            .then(res => res.json())
+            .then(data => {
+                setCsrfToken(data.csrfToken);
+            })
+            .then(() => {
+                console.log('CSRF Token reçu');
+            })
+            .catch(() => {
+                console.warn('Échec de récupération du token CSRF');
+            });
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -27,14 +44,18 @@ export const useSafeForm = () => {
                 name: fieldErrors.name?.[0],
                 email: fieldErrors.email?.[0],
             });
-            return; // ✅ on bloque l'envoi si les données sont invalides
+            return;
         }
 
         setErrors({});
         try {
             const res = await fetch('http://localhost:3000/submit', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-XSRF-TOKEN': csrfToken,
+                },
+                credentials: 'include',
                 body: JSON.stringify(form)
             });
 
@@ -49,7 +70,6 @@ export const useSafeForm = () => {
             setSuccess("Une erreur est survenue");
         }
     };
-
 
     return {
         form,
