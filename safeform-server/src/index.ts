@@ -5,6 +5,7 @@ import { formSchema } from './form.schema';
 import rateLimit from 'express-rate-limit';
 import csrf from 'csurf';
 import cookieParser from 'cookie-parser';
+import authRoutes from './routes/auth'
 
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(authRoutes);
 
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000,

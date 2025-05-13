@@ -1,9 +1,11 @@
+import RegisterFormContainer from './RegisterForm/RegisterForm.container';
 import SafeFormContainer from './SafeForm/SafeForm.container';
 
 function App() {
   return (
     <div className='app-container'>
-      <SafeFormContainer />
+      {/* <SafeFormContainer /> */}
+      <RegisterFormContainer />
     </div>
   );
 }

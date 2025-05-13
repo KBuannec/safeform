@@ -23,6 +23,7 @@ safeform/
   - Headers sécurisés
   - Rate-limiting anti-spam
 - Préparer l’extension vers un projet DevSecOps (tests, CI, audit, etc.)
+- Connexion et inscription avec persistance en base PostgreSQL
 
 ---
 
@@ -34,11 +35,20 @@ safeform/
 - Validation des champs avec **Zod**
 - SCSS personnalisé
 - Requêtes sécurisées avec `fetch` + header `X-XSRF-TOKEN`
+- Formulaire d’inscription avec validation live (Zod)
+- Saisie sécurisée du mot de passe (type `password`)
+- Gestion d'affichage des erreurs et succès
+- Affichage/masquage du mot de passe
 
 ### Back-end (Node.js) :
 - Express en TypeScript
 - Middleware **Helmet** (headers de sécurité)
-- **Zod** pour valider les données entrantes
+- API REST avec Express en TypeScript
+- Validation des données avec **Zod**
+- Hashage des mots de passe avec **bcrypt**
+- Authentification : inscription et connexion avec gestion des erreurs
+- Base de données **PostgreSQL** avec **Prisma**
+- Middleware de sécurité : **Helmet**, **CSRF**, **rate-limit**, **CORS**
 - **CORS** strict (avec `credentials: true`)
 - **csurf** pour protection CSRF (cookie + token)
 - **express-rate-limit** pour limiter les abus

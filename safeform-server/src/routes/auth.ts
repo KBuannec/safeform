@@ -12,6 +12,11 @@ const registerSchema = z.object({
     password: z.string().min(6, 'Mot de passe trop court'),
 });
 
+const loginSchema = z.object({
+    email: z.string().email('Email invalide'),
+    password: z.string().min(6, 'Mot de passe requis'),
+});
+
 router.post('/register', async (req, res) => {
     const parsed = registerSchema.safeParse(req.body);
 
@@ -40,6 +45,50 @@ router.post('/register', async (req, res) => {
     });
 
     res.status(201).json({ message: 'Utilisateur créé', user: { id: user.id, email: user.email, name: user.name }});
+
+    console.log('Nouvel utilisateur enregistré :', user);
+});
+
+router.post('/login', async (req, res) => {
+    const result = loginSchema.safeParse(req.body);
+
+    if(!result.success) {
+        const errors = result.error.flatten().fieldErrors;
+        return res.status(400).json({
+            message: 'Erreur de validation',
+            errors,
+        });
+    }
+
+    const { email, password } = result.data;
+
+    try {
+        const user = await prisma.user.findUnique({ where: { email } });
+
+        if (!user) {
+            return res.status(401).json({ message: 'Utilisateur introuvable' });
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Mot de passe incorrect' });
+        }
+
+        console.log('Connexion réussie pour :', user.email);
+
+        res.status(200).json({
+            message: 'Connexion réussie',
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+            },
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Erreur serveur' });
+    }
 });
 
 export default router;
