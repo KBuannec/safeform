@@ -2,9 +2,11 @@ import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
+import csrf from "csurf";
 
 const prisma = new PrismaClient();
 const router = Router();
+const csrfProtection = csrf({ cookie: true });
 
 const registerSchema = z.object({
     name: z.string().min(1, 'Nom requis'),
@@ -17,7 +19,7 @@ const loginSchema = z.object({
     password: z.string().min(6, 'Mot de passe requis'),
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', csrfProtection, async (req, res) => {
     const parsed = registerSchema.safeParse(req.body);
 
     if(!parsed.success) {
@@ -49,7 +51,7 @@ router.post('/register', async (req, res) => {
     console.log('Nouvel utilisateur enregistré :', user);
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', csrfProtection, async (req, res) => {
     const result = loginSchema.safeParse(req.body);
 
     if(!result.success) {

@@ -55,6 +55,10 @@ app.post('/submit', csrfProtection, (req, res) => {
   });
 });
 
+app.post('/register', csrfProtection, async (req, res) => {
+  // … (on le code à l'étape suivante)
+});
+
 app.listen(PORT, () => {
   console.log(`✅ Serveur lancé sur http://localhost:${PORT}`);
 });

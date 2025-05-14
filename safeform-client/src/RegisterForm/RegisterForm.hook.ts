@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { z } from 'zod';
 
 const registerSchema = z.object({
-  name: z.string().min(1, 'Nom requis'),
-  email: z.string().email('Email invalide'),
-  password: z.string().min(6, 'Mot de passe trop court'),
+    name: z.string().min(1, 'Nom requis'),
+    email: z.string().email('Email invalide'),
+    password: z.string().min(6, 'Mot de passe trop court'),
 });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
@@ -18,6 +18,21 @@ export const useRegisterForm = () => {
 
     const [errors, setErrors] = useState<Partial<Record<keyof RegisterFormData, string>>>({});
     const [success, setSuccess] = useState<string | null>(null);
+    const [csrfToken, setCsrfToken] = useState<string>('');
+
+    useEffect(() => {
+        fetch('http://localhost:3000/csrf-token', {
+            credentials: 'include',
+        })
+            .then(res => res.json() as Promise<{ csrfToken: string }>)
+            .then(data => {
+                setCsrfToken(data.csrfToken);
+                console.log('CSRF Token reçu (register) :', data.csrfToken);
+            })
+            .catch(() => {
+                console.warn('Échec récupération CSRF token (register)');
+            });
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -41,7 +56,7 @@ export const useRegisterForm = () => {
         try {
             const res = await fetch('http://localhost:3000/register', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'X-XSRF-TOKEN': csrfToken, },
                 credentials: 'include',
                 body: JSON.stringify(form),
             });
