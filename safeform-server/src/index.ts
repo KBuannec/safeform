@@ -7,9 +7,14 @@ import csrf from 'csurf';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth'
 
-
 const app = express();
 const PORT = 3000;
+
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: 'Trop de requêtes, réessayez plus tard.',
+}));
 
 app.use(helmet());
 app.use(cors({
@@ -20,13 +25,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(authRoutes);
 
-app.use(rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 5,
-  message: 'Trop de requêtes, réessayez plus tard.',
-}));
-
 const csrfProtection = csrf({ cookie: true });
+
+// app.use('/api/protected-route', csrfProtection, handler);
 
 app.get('/csrf-token', csrfProtection, (req, res) => {
   const token = req.csrfToken();

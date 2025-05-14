@@ -18,11 +18,9 @@ export const useSafeForm = () => {
         fetch('http://localhost:3000/csrf-token', {
             credentials: 'include',
         })
-            .then(res => res.json())
+            .then(res => res.json() as Promise<{ csrfToken: string }>)
             .then(data => {
                 setCsrfToken(data.csrfToken);
-            })
-            .then(() => {
                 console.log('CSRF Token reçu');
             })
             .catch(() => {
