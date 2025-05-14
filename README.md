@@ -18,12 +18,13 @@ safeform/
 - Créer une base de formulaire sécurisée et scalable
 - Implémenter une validation côté front avec **Zod**
 - Intégrer une sécurité complète côté serveur :
-  - Protection contre le XSS
-  - Protection CSRF
-  - Headers sécurisés
-  - Rate-limiting anti-spam
-- Préparer l’extension vers un projet DevSecOps (tests, CI, audit, etc.)
-- Connexion et inscription avec persistance en base PostgreSQL
+  - Protection XSS
+  - Protection CSRF (cookie + token)
+  - Sécurisation des headers HTTP avec Helmet
+  - Limitation des requêtes avec rate-limiting
+- Implémenter un système d'inscription / connexion avec session
+- Persister les utilisateurs en base PostgreSQL via Prisma ORM
+- Préparer une future extension vers un dashboard sécurisé (projet `SecurePanel`)
 
 ---
 
@@ -42,16 +43,14 @@ safeform/
 
 ### Back-end (Node.js) :
 - Express en TypeScript
-- Middleware **Helmet** (headers de sécurité)
-- API REST avec Express en TypeScript
-- Validation des données avec **Zod**
+- API REST avec validation Zod
+- Sécurité HTTP avec **Helmet**
+- Gestion des sessions avec **express-session**
 - Hashage des mots de passe avec **bcrypt**
-- Authentification : inscription et connexion avec gestion des erreurs
-- Base de données **PostgreSQL** avec **Prisma**
-- Middleware de sécurité : **Helmet**, **CSRF**, **rate-limit**, **CORS**
-- **CORS** strict (avec `credentials: true`)
-- **csurf** pour protection CSRF (cookie + token)
-- **express-rate-limit** pour limiter les abus
+- Protection CSRF avec **csurf**
+- Limitation anti-spam avec **express-rate-limit**
+- CORS strict (avec `credentials: true`)
+- Base de données PostgreSQL avec **Prisma ORM**
 
 ---
 
@@ -77,13 +76,12 @@ npm run dev
 
 ### 📌 À venir :
 
-- Authentification utilisateur avec base de données
+- Ajout de tests unitaires simples (Zod, soumission)
 
-- Ajout de tests unitaires
+- Intégration ESLint pour analyse statique
 
-- Intégration CI/CD
+- CI basique avec GitHub Actions (lint + test)
 
-- Audit de sécurité (ESLint + SonarQube)
-
+- Ajout d'une navigation simple pour basculer entre les formulaires (SafeForm, Register, Login)
 
 

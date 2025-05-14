@@ -77,6 +77,8 @@ router.post('/login', csrfProtection, async (req, res) => {
             return res.status(401).json({ message: 'Mot de passe incorrect' });
         }
 
+        req.session.userId = user.id;
+
         console.log('Connexion réussie pour :', user.email);
 
         res.status(200).json({
@@ -92,5 +94,29 @@ router.post('/login', csrfProtection, async (req, res) => {
         res.status(500).json({ message: 'Erreur serveur' });
     }
 });
+
+router.get('/me', (req, res) => {
+  const userId = req.session.userId;
+
+  if (!userId) {
+    return res.status(401).json({ message: 'Non connecté' });
+  }
+
+  res.status(200).json({ message: 'Connecté', userId });
+});
+
+router.post('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Erreur de déconnexion :', err);
+      return res.status(500).json({ message: 'Erreur serveur lors de la déconnexion' });
+    }
+
+    res.clearCookie('connect.sid');
+    res.status(204).end();
+  });
+});
+
+
 
 export default router;

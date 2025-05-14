@@ -1,33 +1,42 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { formSchema } from './form.schema';
-import rateLimit from 'express-rate-limit';
-import csrf from 'csurf';
 import cookieParser from 'cookie-parser';
-import authRoutes from './routes/auth'
+import csrf from 'csurf';
+import authRoutes from './routes/auth';
+import { formSchema } from './form.schema';
+import session from 'express-session';
+
 
 const app = express();
 const PORT = 3000;
 
-app.use(rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 5,
-  message: 'Trop de requêtes, réessayez plus tard.',
-}));
-
 app.use(helmet());
+
 app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true,
 }));
+
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(session({
+  secret: 'safeform_super_secret_dev_key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+    sameSite: 'lax',
+    maxAge: 1000 * 60 * 60 * 2
+  }
+}));
+
 app.use(authRoutes);
 
-const csrfProtection = csrf({ cookie: true });
 
-// app.use('/api/protected-route', csrfProtection, handler);
+const csrfProtection = csrf({ cookie: true });
 
 app.get('/csrf-token', csrfProtection, (req, res) => {
   const token = req.csrfToken();
@@ -35,7 +44,7 @@ app.get('/csrf-token', csrfProtection, (req, res) => {
   res.status(200).json({ csrfToken: token });
 });
 
-app.post('/submit', csrfProtection, (req, res) => {  
+app.post('/submit', csrfProtection, (req, res) => {
   const result = formSchema.safeParse(req.body);
 
   if (!result.success) {
@@ -47,17 +56,15 @@ app.post('/submit', csrfProtection, (req, res) => {
   }
 
   const validatedData = result.data;
-
   console.log('✅ Données valides reçues :', validatedData);
+
   res.status(200).json({
     message: 'Reçu avec succès',
     data: validatedData,
   });
 });
 
-app.post('/register', csrfProtection, async (req, res) => {
-  // … (on le code à l'étape suivante)
-});
+app.use(authRoutes);
 
 app.listen(PORT, () => {
   console.log(`✅ Serveur lancé sur http://localhost:${PORT}`);
