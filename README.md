@@ -16,15 +16,26 @@ safeform/
 ## 🔐 Objectifs du projet
 
 - Créer une base de formulaire sécurisée et scalable
-- Implémenter une validation côté front avec **Zod**
+
+- Implémenter une validation côté front avec Zod
+
 - Intégrer une sécurité complète côté serveur :
-  - Protection XSS
-  - Protection CSRF (cookie + token)
-  - Sécurisation des headers HTTP avec Helmet
-  - Limitation des requêtes avec rate-limiting
-- Implémenter un système d'inscription / connexion avec session
+
+- Protection XSS
+
+- Protection CSRF (cookie + token)
+
+- Sécurisation des headers HTTP avec Helmet
+
+- Limitation des requêtes avec rate-limiting
+
+- Implémenter un système d'inscription / connexion avec sessions
+
 - Persister les utilisateurs en base PostgreSQL via Prisma ORM
-- Préparer une future extension vers un dashboard sécurisé (projet `SecurePanel`)
+
+- Couvrir les formulaires avec des tests unitaires (et snapshots)
+
+
 
 ---
 
@@ -34,7 +45,7 @@ safeform/
 - React + TypeScript (via Vite)
 - Architecture *feature folder* (Composant / Hook / Container)
 - Validation des champs avec **Zod**
-- SCSS personnalisé
+- SCSS modulaire
 - Requêtes sécurisées avec `fetch` + header `X-XSRF-TOKEN`
 - Formulaire d’inscription avec validation live (Zod)
 - Saisie sécurisée du mot de passe (type `password`)
@@ -51,6 +62,12 @@ safeform/
 - Limitation anti-spam avec **express-rate-limit**
 - CORS strict (avec `credentials: true`)
 - Base de données PostgreSQL avec **Prisma ORM**
+
+### Tests & Qualité :
+- Vitest + Testing Library (rendu, interactions, snapshots)
+- Coverage par formulaire
+- ESLint strict + formatage
+- Prévu : CI GitHub Actions
 
 ---
 
@@ -76,12 +93,7 @@ npm run dev
 
 ### 📌 À venir :
 
-- Ajout de tests unitaires simples (Zod, soumission)
+- CI basique avec GitHub Actions
 
-- Intégration ESLint pour analyse statique
-
-- CI basique avec GitHub Actions (lint + test)
-
-- Ajout d'une navigation simple pour basculer entre les formulaires (SafeForm, Register, Login)
 
 
