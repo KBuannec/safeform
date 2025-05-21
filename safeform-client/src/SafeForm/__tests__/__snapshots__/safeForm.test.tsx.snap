@@ -1,0 +1,40 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SafeForm component > correspond au snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="safeform"
+  >
+    <h2>
+      🛡️ SafeForm
+    </h2>
+    <label
+      for="name"
+    >
+      Nom
+    </label>
+    <input
+      id="name"
+      name="name"
+      type="text"
+      value=""
+    />
+    <label
+      for="email"
+    >
+      Email
+    </label>
+    <input
+      id="email"
+      name="email"
+      type="email"
+      value=""
+    />
+    <button
+      type="submit"
+    >
+      Envoyer
+    </button>
+  </form>
+</DocumentFragment>
+`;

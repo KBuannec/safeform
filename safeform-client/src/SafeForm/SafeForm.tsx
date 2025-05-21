@@ -13,8 +13,9 @@ const SafeForm = ({ form, errors, success, onChange, onSubmit }: Props) => {
         <form onSubmit={onSubmit} className="safeform">
             <h2>🛡️ SafeForm</h2>
 
-            <label>Nom</label>
+            <label htmlFor='name'>Nom</label>
             <input
+                id='name'
                 type="text"
                 name="name"
                 value={form.name}
@@ -22,8 +23,9 @@ const SafeForm = ({ form, errors, success, onChange, onSubmit }: Props) => {
             />
             {errors.name && <p className="error">{errors.name}</p>}
 
-            <label>Email</label>
+            <label htmlFor='email'>Email</label>
             <input
+                id='email'
                 type="email"
                 name="email"
                 value={form.email}

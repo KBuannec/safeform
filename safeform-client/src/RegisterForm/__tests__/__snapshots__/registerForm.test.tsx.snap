@@ -1,0 +1,62 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`RegisterForm component > correspond au snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="register-form"
+    role="form"
+  >
+    <h2>
+      Créer un compte
+    </h2>
+    <label
+      for="name"
+    >
+      Nom
+    </label>
+    <input
+      id="name"
+      name="name"
+      placeholder="Nom"
+      value=""
+    />
+    <label
+      for="email"
+    >
+      Email
+    </label>
+    <input
+      id="email"
+      name="email"
+      placeholder="test@example.fr"
+      value=""
+    />
+    <label
+      for="password"
+    >
+      Mot de passe
+    </label>
+    <div
+      class="input-wrapper"
+    >
+      <input
+        id="password"
+        name="password"
+        placeholder="••••••••"
+        type="password"
+        value=""
+      />
+      <span
+        class="eye-icon"
+      >
+        👁️
+      </span>
+    </div>
+    <button
+      type="submit"
+    >
+      S'inscrire
+    </button>
+  </form>
+</DocumentFragment>
+`;

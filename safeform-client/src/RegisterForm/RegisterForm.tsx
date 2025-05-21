@@ -26,7 +26,7 @@ const RegisterForm = ({ form, errors, success, onChange, onSubmit }: RegisterFor
     };
 
     return (
-        <form className='register-form' onSubmit={onSubmit}>
+        <form className='register-form' onSubmit={onSubmit} role='form'>
             <h2>Créer un compte</h2>
 
             <label htmlFor='name'>Nom</label>
