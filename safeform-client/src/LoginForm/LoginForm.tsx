@@ -19,7 +19,7 @@ const LoginForm = ({ form, errors, success, onChange, onSubmit }: LoginFormProps
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <form className='register-form' onSubmit={onSubmit}>
+    <form className='login-form' onSubmit={onSubmit}>
       <h2>Connexion</h2>
 
       <label htmlFor='email'>Email</label>

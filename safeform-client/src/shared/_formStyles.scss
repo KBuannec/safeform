@@ -1,0 +1,104 @@
+.form-base {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    max-width: 500px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    h2 {
+        text-align: center;
+        color: #1e293b;
+        margin-bottom: 1rem;
+    }
+
+    label {
+        font-weight: 600;
+        color: #334155;
+    }
+
+    input {
+        padding: 0.75rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 0.375rem;
+        font-size: 1rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+
+        &:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+            outline: none;
+        }
+    }
+
+    button {
+        padding: 0.75rem;
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 0.375rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.1s ease;
+
+        &:hover {
+            background-color: #1e40af;
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
+    }
+
+    .error {
+        color: #dc2626;
+        font-size: 0.875rem;
+    }
+
+    .success {
+        color: #16a34a;
+        font-size: 0.875rem;
+        text-align: center;
+        animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-5px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    input {
+        width: 100%;
+        padding-right: 2.5rem;
+        height: 20px;
+        font-size: 1rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        padding-left: 0.75rem;
+    }
+
+    .eye-icon {
+        position: absolute;
+        right: 0.75rem;
+        cursor: pointer;
+        user-select: none;
+        font-size: 1rem;
+        color: #333;
+    }
+}
